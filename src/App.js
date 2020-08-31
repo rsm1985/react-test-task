@@ -3,8 +3,7 @@ import './styles/common/index.scss'
 
 function App(props) {
   return (
-    <div className="App">
-      <div ></div>
+    <div className="container">
       {props.children}
     </div>
   );

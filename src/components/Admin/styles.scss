@@ -1,3 +1,47 @@
 .admin {
-  background-color: red;
+  padding: 15px;
+  &__buttons {
+    display: flex;
+    justify-content: space-around;
+  }
+  &__button {
+    padding: 5px 25px;
+    border: 1px solid #000;
+    border-radius: 5px;
+    transition: .5s ease;
+    &:hover {
+      background-color: #b3d4fc;
+    }
+  }
+}
+.sources {
+  display: flex;
+  &__header {
+    margin: 0 auto;
+    padding: 5px 15px;
+    max-width: 150px;
+    background-color: goldenrod;
+    text-align: center;
+  }
+  &__section {
+    border: 1px solid red;
+    &_sources {
+      max-width: 250px;
+      width: 100%;
+    }
+  }
+  &__selection {
+    margin-top: 15px;
+  }
+  &__selection-item {
+    display: flex;
+    align-items: center;
+  }
+  &__selection-label {
+    flex-grow: 1;
+    padding: 10px;
+  }
+  &__selection-icon {
+    max-width: 25px;
+  }
 }
