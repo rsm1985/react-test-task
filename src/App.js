@@ -1,12 +1,11 @@
 import React from 'react';
-import Main from 'components/Main'
 import './styles/common/index.scss'
 
-function App() {
+function App(props) {
   return (
     <div className="App">
-      111
-      <Main />
+      <div ></div>
+      {props.children}
     </div>
   );
 }
