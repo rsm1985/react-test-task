@@ -1,6 +1,6 @@
 import { combineReducers } from "redux";
-import { mainReducer } from "redux/main/reducers";
+import { configureReducer } from "redux/configure/reducers";
 
 export default combineReducers({
-  main: mainReducer,
+  configure: configureReducer,
 });
