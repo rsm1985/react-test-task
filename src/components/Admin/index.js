@@ -47,7 +47,6 @@ const Admin = () => {
   const [selection, setSelection] = useState(selectionState);
   const [sourcesToConfigure, setSourcesToConfigure] = useState([])
   const [isIngestionButtonShow, setIsIngestionButtonShow] = useState(false)
-  console.log("sourcesToConfigure", sourcesToConfigure)
   const onSelectsClick = () => {
     setSelects(!selects)
   };
