@@ -1,9 +1,8 @@
 import React, {useState} from "react"
-import {actionSaveInput} from 'redux/configure/actions'
+import Arrow from 'images/next-white.svg'
 
 const Configure = (
-  {configure, setConfigureComplete, checkAfterRemoveSnack, setNextStep, setIsIngestionButtonShow}) => {
-  // const active = selection.find(item => item.state);
+  {configure, setConfigureComplete, setNextStep, setIsIngestionButtonShow}) => {
   const [snacks, setSnacks] = useState([]);
   const [input, setInput] = useState("");
 
@@ -16,8 +15,8 @@ const Configure = (
       newSnacks.push(e.target.value);
       setSnacks(newSnacks);
       setInput("");
-      setConfigureComplete(configure[0].id);
-      if(configure.length === 1) {
+      // setConfigureComplete(configure[0].id);
+      if (configure.length === 1) {
         setIsIngestionButtonShow(true)
       }
 
@@ -25,7 +24,10 @@ const Configure = (
   };
   const onRemoveSnack = (snack) => {
     setSnacks(snacks.filter(item => item !== snack))
-    setConfigureComplete(configure[0].id, snacks.length)
+    // setConfigureComplete(configure[0].id, snacks.length)
+    if (snacks.length === 1) {
+      setIsIngestionButtonShow(false)
+    }
   }
   return <>
     <div className="sources__header">CONFIGURE SOURCES</div>
@@ -51,16 +53,21 @@ const Configure = (
         </div>
       </div>
       {snacks.length && (configure.length > 1)
-        ? <div className="configure__next" onClick={() => {
-          setSnacks([])
-          setNextStep()
-        }}>
-          Next
+        ? <div className="configure__next-wrapper" >
+          <div className="configure__next" onClick={() => {
+            setSnacks([])
+            setNextStep()
+          }}>
+            <div className="configure__next-arrow">
+              <img className="configure__arrow-icon" src={Arrow} alt="arrow"/>
+            </div>
+            <div className="configure__arrow-label">
+              {configure[1].label}
+            </div>
+          </div>
         </div>
         : null}
-
     </div>
-
   </>
 }
 

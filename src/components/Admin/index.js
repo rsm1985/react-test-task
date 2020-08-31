@@ -56,9 +56,6 @@ const Admin = () => {
   const onSourcesClick = () => {
     setSources(true)
     setSourcesToConfigure(selection.filter(item => item.state))
-    // if(selection.length) {
-    //   setNextTask(selection[0])
-    // }
   }
 
   const onCheckboxClick = (id) => {
