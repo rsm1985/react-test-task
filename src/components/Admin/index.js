@@ -44,7 +44,6 @@ const Admin = () => {
     },
   ]
   const [selects, setSelects] = useState(false);
-  const [sources, setSources] = useState(false);
   const [selection, setSelection] = useState(selectionState);
   const [sourcesToConfigure, setSourcesToConfigure] = useState([])
   const [isIngestionButtonShow, setIsIngestionButtonShow] = useState(false)
@@ -54,12 +53,10 @@ const Admin = () => {
   };
 
   const onSourcesClick = () => {
-    setSources(true)
     setSourcesToConfigure(selection.filter(item => item.state))
-  }
+  };
 
   const onCheckboxClick = (id) => {
-    setSources(false)
     setSelection(selection.map(item => {
       if (item.id === id) {
         item.state = !item.state
@@ -67,27 +64,7 @@ const Admin = () => {
       return item
     }))
   };
-  const setCompleteConfigure = () => {
-    // console.log("setCompleteConfigure id: ", id)
-    // setSelection(selection.map(item => {
-    //   if (snacksLength || item.id === id) {
-    //     // console.log("item.id === id", id)
-    //     item.configure = true
-    //   } else item.configure = false
-    //   return item
-    // }))
-  };
   const selectionLength = selection.filter(item => item.state).length;
-  // const currentStep = selection.find(item => !item.currentStep);
-  // console.log("currentStep", currentStep)
-  const checkAfterRemoveSnack = (id) => {
-
-  }
-  // const isIngestionShow = () => {
-  //   const checked = selection.filter(item => item.state).length
-  //   const proceed = selection.filter(item => item.configure).length
-  //   return checked !== 0 && checked === proceed;
-  // };
   const setNextStep = () => {
     if(sourcesToConfigure.length > 1) {
       setSourcesToConfigure(sourcesToConfigure.slice(1))
@@ -139,10 +116,7 @@ const Admin = () => {
           </div>
           <div className="sources__section sources__section_configure">
             {sourcesToConfigure.length ? <Configure
-                selection={selection}
                 configure={sourcesToConfigure}
-                setConfigureComplete={setCompleteConfigure}
-                checkAfterRemoveSnack={checkAfterRemoveSnack}
                 setNextStep={setNextStep}
                 setIsIngestionButtonShow={setIsIngestionButtonShow}
               />
@@ -151,7 +125,7 @@ const Admin = () => {
           </div>
           {isIngestionButtonShow
             ? <div className="sources__section sources__section_ingestion">
-              <button className="sources__injestion-btn">Start Ingestion</button>
+              <button className="sources__injestion-btn" onClick={()=>alert("Start ingestion")}>Start Ingestion</button>
             </div>
             : null
           }

@@ -2,7 +2,7 @@ import React, {useState} from "react"
 import Arrow from 'images/next-white.svg'
 
 const Configure = (
-  {configure, setConfigureComplete, setNextStep, setIsIngestionButtonShow}) => {
+  {configure, setNextStep, setIsIngestionButtonShow}) => {
   const [snacks, setSnacks] = useState([]);
   const [input, setInput] = useState("");
 
@@ -15,7 +15,6 @@ const Configure = (
       newSnacks.push(e.target.value);
       setSnacks(newSnacks);
       setInput("");
-      // setConfigureComplete(configure[0].id);
       if (configure.length === 1) {
         setIsIngestionButtonShow(true)
       }
@@ -24,7 +23,6 @@ const Configure = (
   };
   const onRemoveSnack = (snack) => {
     setSnacks(snacks.filter(item => item !== snack))
-    // setConfigureComplete(configure[0].id, snacks.length)
     if (snacks.length === 1) {
       setIsIngestionButtonShow(false)
     }
