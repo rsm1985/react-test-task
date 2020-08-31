@@ -2,7 +2,7 @@ import React, {useState} from "react"
 import {actionSaveInput} from 'redux/configure/actions'
 
 const Configure = (
-  {configure, setConfigureComplete, checkAfterRemoveSnack, setNextStep}) => {
+  {configure, setConfigureComplete, checkAfterRemoveSnack, setNextStep, setIsIngestionButtonShow}) => {
   // const active = selection.find(item => item.state);
   const [snacks, setSnacks] = useState([]);
   const [input, setInput] = useState("");
@@ -16,17 +16,21 @@ const Configure = (
       newSnacks.push(e.target.value);
       setSnacks(newSnacks);
       setInput("");
-      setConfigureComplete(configure.id);
+      setConfigureComplete(configure[0].id);
+      if(configure.length === 1) {
+        setIsIngestionButtonShow(true)
+      }
+
     }
   };
   const onRemoveSnack = (snack) => {
-    setSnacks(snacks.filter(item => item!== snack))
-    setConfigureComplete(configure.id, snacks.length)
+    setSnacks(snacks.filter(item => item !== snack))
+    setConfigureComplete(configure[0].id, snacks.length)
   }
   return <>
     <div className="sources__header">CONFIGURE SOURCES</div>
     <div className="configure">
-      <img className="configure__logo" src={configure.icon} alt="Icon"/>
+      <img className="configure__logo" src={configure[0].icon} alt="Icon"/>
       <div className="configure__username">
         <div className="configure__label">
           UserName
@@ -46,10 +50,13 @@ const Configure = (
             onKeyPress={onAddSnack}/>
         </div>
       </div>
-      {snacks.length
-        ? <div className="configure__next" onClick={()=>setNextStep()}>
+      {snacks.length && (configure.length > 1)
+        ? <div className="configure__next" onClick={() => {
+          setSnacks([])
+          setNextStep()
+        }}>
           Next
-      </div>
+        </div>
         : null}
 
     </div>

@@ -47,8 +47,7 @@ const Admin = () => {
   const [sources, setSources] = useState(false);
   const [selection, setSelection] = useState(selectionState);
   const [sourcesToConfigure, setSourcesToConfigure] = useState([])
-  // const [activeConfigure, setActiveConfigure] = useState({});
-  // const [nextTask, setNextTask] = useState({})
+  const [isIngestionButtonShow, setIsIngestionButtonShow] = useState(false)
   console.log("sourcesToConfigure", sourcesToConfigure)
   const onSelectsClick = () => {
     setSelects(!selects)
@@ -87,14 +86,16 @@ const Admin = () => {
   const checkAfterRemoveSnack = (id) => {
 
   }
-  const isIngestionShow = () => {
-    const checked = selection.filter(item => item.state).length
-    const proceed = selection.filter(item => item.configure).length
-    return checked !== 0 && checked === proceed;
-  };
+  // const isIngestionShow = () => {
+  //   const checked = selection.filter(item => item.state).length
+  //   const proceed = selection.filter(item => item.configure).length
+  //   return checked !== 0 && checked === proceed;
+  // };
   const setNextStep = () => {
-    if(sourcesToConfigure.length > 1)
-    sourcesToConfigure.slice()
+    if(sourcesToConfigure.length > 1) {
+      setSourcesToConfigure(sourcesToConfigure.slice(1))
+    }
+    else setIsIngestionButtonShow(true)
   }
 
   return (
@@ -142,15 +143,16 @@ const Admin = () => {
           <div className="sources__section sources__section_configure">
             {sourcesToConfigure.length ? <Configure
                 selection={selection}
-                configure={sourcesToConfigure[0]}
+                configure={sourcesToConfigure}
                 setConfigureComplete={setCompleteConfigure}
                 checkAfterRemoveSnack={checkAfterRemoveSnack}
                 setNextStep={setNextStep}
+                setIsIngestionButtonShow={setIsIngestionButtonShow}
               />
              : null
             }
           </div>
-          {isIngestionShow()
+          {isIngestionButtonShow
             ? <div className="sources__section sources__section_ingestion">
               <button className="sources__injestion-btn">Start Ingestion</button>
             </div>
