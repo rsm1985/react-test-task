@@ -90,6 +90,9 @@
     padding-bottom: 100px;
     border: 1px solid #000;
   }
+  &__label {
+    flex-shrink: 0;
+  }
   &__input {
     display: flex;
     align-items: center;

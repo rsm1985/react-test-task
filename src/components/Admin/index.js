@@ -13,6 +13,7 @@ const Admin = () => {
     {
       id: 1,
       label: "Facebook",
+      placeholder: "User name",
       icon: Fb,
       state: false,
       configure: false,
@@ -21,6 +22,7 @@ const Admin = () => {
     {
       id: 2,
       label: "Twitter",
+      placeholder: "Placeholder",
       icon: Tw,
       state: false,
       configure: false,
@@ -29,6 +31,7 @@ const Admin = () => {
     {
       id: 3,
       label: "YouTube",
+      placeholder: "Page name",
       icon: Yt,
       state: false,
       configure: false,
@@ -37,6 +40,7 @@ const Admin = () => {
     {
       id: 4,
       label: "Social",
+      placeholder: "Placeholder",
       icon: Soc,
       state: false,
       configure: false,

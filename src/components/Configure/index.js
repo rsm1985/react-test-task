@@ -33,7 +33,7 @@ const Configure = (
       <img className="configure__logo" src={configure[0].icon} alt="Icon"/>
       <div className="configure__username">
         <div className="configure__label">
-          UserName
+          {configure[0].placeholder}
         </div>
         <div className="configure__input">
           {
