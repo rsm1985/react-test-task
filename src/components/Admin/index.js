@@ -15,38 +15,51 @@ const Admin = () => {
       label: "Facebook",
       icon: Fb,
       state: false,
-      configure: false
+      configure: false,
+      currentStep: false
     },
     {
       id: 2,
       label: "Twitter",
       icon: Tw,
       state: false,
-      configure: false
+      configure: false,
+      currentStep: false
     },
     {
       id: 3,
       label: "YouTube",
       icon: Yt,
       state: false,
-      configure: false
+      configure: false,
+      currentStep: false
     },
     {
       id: 4,
       label: "Social",
       icon: Soc,
       state: false,
-      configure: false
+      configure: false,
+      currentStep: false
     },
   ]
   const [selects, setSelects] = useState(false);
   const [sources, setSources] = useState(false);
   const [selection, setSelection] = useState(selectionState);
+  const [sourcesToConfigure, setSourcesToConfigure] = useState([])
+  // const [activeConfigure, setActiveConfigure] = useState({});
+  // const [nextTask, setNextTask] = useState({})
+  console.log("sourcesToConfigure", sourcesToConfigure)
   const onSelectsClick = () => {
     setSelects(!selects)
   };
+
   const onSourcesClick = () => {
     setSources(true)
+    setSourcesToConfigure(selection.filter(item => item.state))
+    // if(selection.length) {
+    //   setNextTask(selection[0])
+    // }
   }
 
   const onCheckboxClick = (id) => {
@@ -58,19 +71,20 @@ const Admin = () => {
       return item
     }))
   };
-  const setCompleteConfigure = (id, snacksLength) => {
-    console.log("setCompleteConfigure id: ", id)
-    setSelection(selection.map(item => {
-      if (snacksLength || item.id === id) {
-        console.log("item.id === id", id)
-        item.configure = true
-      } else item.configure = false
-      return item
-    }))
+  const setCompleteConfigure = () => {
+    // console.log("setCompleteConfigure id: ", id)
+    // setSelection(selection.map(item => {
+    //   if (snacksLength || item.id === id) {
+    //     // console.log("item.id === id", id)
+    //     item.configure = true
+    //   } else item.configure = false
+    //   return item
+    // }))
   };
   const selectionLength = selection.filter(item => item.state).length;
+  // const currentStep = selection.find(item => !item.currentStep);
+  // console.log("currentStep", currentStep)
   const checkAfterRemoveSnack = (id) => {
-
 
   }
   const isIngestionShow = () => {
@@ -78,6 +92,11 @@ const Admin = () => {
     const proceed = selection.filter(item => item.configure).length
     return checked !== 0 && checked === proceed;
   };
+  const setNextStep = () => {
+    if(sourcesToConfigure.length > 1)
+    sourcesToConfigure.slice()
+  }
+
   return (
     <>
       <div className="admin">
@@ -110,6 +129,7 @@ const Admin = () => {
               }
             </div>
           </div>
+
           <div className="sources__section">
             {
               selectionLength
@@ -120,14 +140,15 @@ const Admin = () => {
             }
           </div>
           <div className="sources__section sources__section_configure">
-
-            {selectionLength && sources
-              ? <Configure
+            {sourcesToConfigure.length ? <Configure
                 selection={selection}
+                configure={sourcesToConfigure[0]}
                 setConfigureComplete={setCompleteConfigure}
                 checkAfterRemoveSnack={checkAfterRemoveSnack}
+                setNextStep={setNextStep}
               />
-              : null}
+             : null
+            }
           </div>
           {isIngestionShow()
             ? <div className="sources__section sources__section_ingestion">
