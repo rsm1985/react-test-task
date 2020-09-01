@@ -77,16 +77,12 @@ export default function Marketer() {
     return {authors: [...authors], counter: commentCounter}
   }
   const getLikesCount = (data) => {
-
-
-
     const likesCounter = []
     const users = new Set(data.filter(item => {
       if (filter === "all") {
         return true
       } else return item.username === filter
     }).map(item => item.username))
-    // console.log("users", users)
     users.forEach(item => {
       likesCounter.push(Math.round(Math.random()*100))
     })
@@ -98,15 +94,12 @@ export default function Marketer() {
         const comments = getCommentsCount(response.data.list)
         const dailyComments = getDailyComments(response.data.list)
         const likes = getLikesCount(response.data.list)
-
         setCommentsCount(comments.counter)
         setUserComments(comments.authors)
         setDailyCommentsCount(dailyComments.comments)
         setCommentsDates(dailyComments.dates)
         setLikesCounters(likes.counter)
         setLikesUsers(likes.users)
-
-
         setPost(response.data.list)
       })
   }, []);
@@ -117,10 +110,7 @@ export default function Marketer() {
     const likes = getLikesCount(post)
     setLikesUsers(likes.users)
     setLikesCounters(likes.counter)
-
   }, [filter])
-  // console.log("likesCounters", likesCounters)
-  // console.log("likesUsers", likesUsers)
   return (
     <div className="marketer">
       <div className="marketer__select">
