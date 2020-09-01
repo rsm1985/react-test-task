@@ -39,22 +39,32 @@ const getCommentsCount = (data) => {
   })
   return {authors: [...authors], counter: commentCounter}
 }
-const addCommentsDataset = (state, counters, users) => {
-  const newState = Object.assign({}, state);
-  newState.labels = users;
-  newState.datasets[0].data = counters
-  return newState
+const getDailyComments = (data) => {
+  const dates = new Set(data.map(({created_datetime}) => dateFormat(created_datetime, "dd.mm.yyyy")))
+  const commentByDateCounter = []
+  dates.forEach(item => {
+    commentByDateCounter.push(data.filter(({created_datetime}) => dateFormat(created_datetime, "dd.mm.yyyy") === item).length)
+  })
+  return {dates: [...dates], comments: commentByDateCounter}
 }
+const addDataset = (state, counters, labels) => (
+  {...state, labels: labels, datasets:[{...state.datasets[0], data: counters }]}
+)
 export default function Marketer() {
   const [post, setPost] = useState([]);
   const [commentsCount, setCommentsCount] = useState([]);
   const [userComments, setUserComments] = useState([]);
+  const [dailyCommentsCount, setDailyCommentsCount] = useState([]);
+  const [commentsDates, setCommentsDates] = useState([]);
   useEffect(() => {
     getData("http://52.175.201.248:3000/facebook/facebook_post/1")
       .then((response) => {
         const comments = getCommentsCount(response.data.list)
+        const dailyComments = getDailyComments(response.data.list)
         setUserComments(comments.authors)
         setCommentsCount(comments.counter)
+        setCommentsDates(dailyComments.dates)
+        setDailyCommentsCount(dailyComments.comments)
         setPost(response.data.list.slice(0, 5))
       })
   }, []);
@@ -93,7 +103,7 @@ export default function Marketer() {
       </div>
       <div className="marketer__graph">
         <Bar
-          data={addCommentsDataset(state, commentsCount, userComments)}
+          data={addDataset(state, commentsCount, userComments)}
           width={600}
           height={300}
           options={{
@@ -110,7 +120,7 @@ export default function Marketer() {
       </div>
       <div className="marketer__graph">
         <Line
-          data={state}
+          data={addDataset(state, dailyCommentsCount, commentsDates)}
           width={600}
           height={300}
           options={{
@@ -120,8 +130,9 @@ export default function Marketer() {
               fontSize: 18
             },
             legend: {
-            display: false
-          }
+              display: false
+            },
+            fill: false
           }}
         /></div>
       <div className="marketer__graph">
