@@ -83,6 +83,9 @@ const Admin = () => {
           <Link to="/blank">
             <button className="admin__button">MANAGE TEAM</button>
           </Link>
+          <Link to="/marketer">
+            <button className="admin__button">MARKETER</button>
+          </Link>
         </div>
 
       </div>
