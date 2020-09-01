@@ -32,24 +32,6 @@ const state = {
 }
 const getData = (link) => axios.get(link);
 
-const getCommentsCount = (data) => {
-  const authors = new Set(data.map(item => item.username))
-  const commentCounter = []
-  authors.forEach(item => {
-    commentCounter.push(data.filter(d => d.username === item).length)
-  })
-  return {authors: [...authors], counter: commentCounter}
-}
-const getDailyComments = (data) => {
-  const dates = new Set(data.map(({created_datetime}) => dateFormat(created_datetime, "dd.mm.yyyy")))
-  const commentByDateCounter = []
-  dates.forEach(item => {
-    commentByDateCounter.push(data.filter(({created_datetime}) => dateFormat(created_datetime, "dd.mm.yyyy") === item).length)
-  })
-  return {dates: [...dates], comments: commentByDateCounter}
-}
-
-
 export default function Marketer() {
   const [filter, setFilter] = useState("all")
   const [post, setPost] = useState([]);
@@ -57,43 +39,88 @@ export default function Marketer() {
   const [userComments, setUserComments] = useState([]);
   const [dailyCommentsCount, setDailyCommentsCount] = useState([]);
   const [commentsDates, setCommentsDates] = useState([]);
+  const [likesCounters, setLikesCounters] = useState([]);
+  const [likesUsers, setLikesUsers] = useState([]);
+
   const onSelectChange = (e) => {
     setFilter(e.target.value)
   }
   const addDataset = (state, counters, labels) => {
-    console.log("labels", labels)
     const filterIndexOf = labels.indexOf(filter)
-    // console.log()
     if(filterIndexOf !== -1) {
-      // console.log("filter", labels.indexOf(filter))
       const filteredLabels = labels.filter((item, index) => index === filterIndexOf)
       const filteredCounters = counters.filter((item, index) => index === filterIndexOf)
-      console.log("filteredLabels", filteredLabels)
       return {...state, labels: filteredLabels, datasets:[{...state.datasets[0], data: filteredCounters }]}
     }
-    // console.log("labels", labels)
-// .filter(item => {
-//     if(filter === "all") {
-//       return true
-//     }
-//     return item.username === filter
-//   })
     return (
       {...state, labels: labels, datasets:[{...state.datasets[0], data: counters }]}
     )
+  }
+  const getDailyComments = (data) => {
+    const dates = new Set(data.map(({created_datetime}) => dateFormat(created_datetime, "dd.mm.yyyy")))
+    const commentByDateCounter = []
+    dates.forEach(item => {
+      commentByDateCounter.push(data.filter(item => {
+        if (filter === "all") {
+          return true
+        } else return item.username === filter
+      }).filter(({created_datetime}) => dateFormat(created_datetime, "dd.mm.yyyy") === item).length)
+    })
+    return {dates: [...dates], comments: commentByDateCounter}
+  }
+  const getCommentsCount = (data) => {
+    const authors = new Set(data.map(item => item.username))
+    const commentCounter = []
+    authors.forEach(item => {
+      commentCounter.push(data.filter(d => d.username === item).length)
+    })
+    return {authors: [...authors], counter: commentCounter}
+  }
+  const getLikesCount = (data) => {
+
+
+
+    const likesCounter = []
+    const users = new Set(data.filter(item => {
+      if (filter === "all") {
+        return true
+      } else return item.username === filter
+    }).map(item => item.username))
+    // console.log("users", users)
+    users.forEach(item => {
+      likesCounter.push(Math.round(Math.random()*100))
+    })
+    return {users: [...users], counter: likesCounter}
   }
   useEffect(() => {
     getData("http://52.175.201.248:3000/facebook/facebook_post/1")
       .then((response) => {
         const comments = getCommentsCount(response.data.list)
         const dailyComments = getDailyComments(response.data.list)
-        setUserComments(comments.authors)
+        const likes = getLikesCount(response.data.list)
+
         setCommentsCount(comments.counter)
-        setCommentsDates(dailyComments.dates)
+        setUserComments(comments.authors)
         setDailyCommentsCount(dailyComments.comments)
+        setCommentsDates(dailyComments.dates)
+        setLikesCounters(likes.counter)
+        setLikesUsers(likes.users)
+
+
         setPost(response.data.list)
       })
   }, []);
+  useEffect(() => {
+    const dailyComments = getDailyComments(post)
+    setCommentsDates(dailyComments.dates)
+    setDailyCommentsCount(dailyComments.comments)
+    const likes = getLikesCount(post)
+    setLikesUsers(likes.users)
+    setLikesCounters(likes.counter)
+
+  }, [filter])
+  // console.log("likesCounters", likesCounters)
+  // console.log("likesUsers", likesUsers)
   return (
     <div className="marketer">
       <div className="marketer__select">
@@ -172,10 +199,11 @@ export default function Marketer() {
             },
             fill: false
           }}
-        /></div>
+        />
+      </div>
       <div className="marketer__graph">
         <Pie
-          data={state}
+          data={addDataset(state, likesCounters, likesUsers)}
           width={600}
           height={300}
           options={{
