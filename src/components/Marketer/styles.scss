@@ -1,3 +1,5 @@
+$m: ".marketer";
+
 .marketer {
   display: flex;
   flex-wrap: wrap;
@@ -9,5 +11,25 @@
   }
   &__graph {
     width: 50%;
+  }
+  &__tr {
+    &_header {
+
+      background-color: darken(#90EE90, 40%);
+      color: #fff;
+      #{$m}__cell {
+        padding: 7px;
+        font-size: 18px;
+      }
+    }
+    &_lightgreen {
+      background-color: #90ee90;
+    }
+  }
+
+  &__cell {
+    padding: 3px;
+    border: 2px solid darken(#90EE90, 30%);
+    font-size: 14px;
   }
 }
