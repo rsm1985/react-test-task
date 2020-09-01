@@ -26,5 +26,7 @@ Open [http://localhost:3000](http://localhost:3000) to view result in the browse
 A test application with React and Chart.js that allows to manage sources (Facebook, Twitter, Youtube, Reddit) and to see charts with posts comments likes.
 
 ## Demo
+#### Manage sources
 ![Manage sources](src/manage-sources.gif)
+#### Charts
 ![Charts](src/charts.gif)
