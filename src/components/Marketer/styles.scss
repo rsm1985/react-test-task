@@ -4,12 +4,16 @@ $m: ".marketer";
   display: flex;
   flex-wrap: wrap;
   margin: 0 auto;
+  padding-top: 15px;
   max-width: 1200px;
   width: 100%;
   &__select {
+    margin-bottom: 20px;
     width: 100%;
   }
   &__graph {
+    max-height: 400px;
+    overflow-y: auto;
     width: 50%;
   }
   &__tr {

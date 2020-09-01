@@ -31,6 +31,7 @@ const state = {
   ]
 }
 const getData = (link) => axios.get(link);
+
 const getCommentsCount = (data) => {
   const authors = new Set(data.map(item => item.username))
   const commentCounter = []
@@ -47,15 +48,40 @@ const getDailyComments = (data) => {
   })
   return {dates: [...dates], comments: commentByDateCounter}
 }
-const addDataset = (state, counters, labels) => (
-  {...state, labels: labels, datasets:[{...state.datasets[0], data: counters }]}
-)
+
+
 export default function Marketer() {
+  const [filter, setFilter] = useState("all")
   const [post, setPost] = useState([]);
   const [commentsCount, setCommentsCount] = useState([]);
   const [userComments, setUserComments] = useState([]);
   const [dailyCommentsCount, setDailyCommentsCount] = useState([]);
   const [commentsDates, setCommentsDates] = useState([]);
+  const onSelectChange = (e) => {
+    setFilter(e.target.value)
+  }
+  const addDataset = (state, counters, labels) => {
+    console.log("labels", labels)
+    const filterIndexOf = labels.indexOf(filter)
+    // console.log()
+    if(filterIndexOf !== -1) {
+      // console.log("filter", labels.indexOf(filter))
+      const filteredLabels = labels.filter((item, index) => index === filterIndexOf)
+      const filteredCounters = counters.filter((item, index) => index === filterIndexOf)
+      console.log("filteredLabels", filteredLabels)
+      return {...state, labels: filteredLabels, datasets:[{...state.datasets[0], data: filteredCounters }]}
+    }
+    // console.log("labels", labels)
+// .filter(item => {
+//     if(filter === "all") {
+//       return true
+//     }
+//     return item.username === filter
+//   })
+    return (
+      {...state, labels: labels, datasets:[{...state.datasets[0], data: counters }]}
+    )
+  }
   useEffect(() => {
     getData("http://52.175.201.248:3000/facebook/facebook_post/1")
       .then((response) => {
@@ -65,12 +91,19 @@ export default function Marketer() {
         setCommentsCount(comments.counter)
         setCommentsDates(dailyComments.dates)
         setDailyCommentsCount(dailyComments.comments)
-        setPost(response.data.list.slice(0, 5))
+        setPost(response.data.list)
       })
   }, []);
   return (
     <div className="marketer">
-      <div className="marketer__select">Select</div>
+      <div className="marketer__select">
+        Select username: &nbsp;
+        <select onChange={onSelectChange} defaultValue="all">
+          <option value="all">All</option>
+          {post.length ? userComments
+            .map(item => (<option value={item} key={item}>{item}</option>)) : null}
+        </select>
+      </div>
       <div className="marketer__graph">
         {
           post.length
@@ -85,9 +118,14 @@ export default function Marketer() {
               </thead>
               <tbody>
               {
-                post.map(
+                post.filter(item => {
+                  if(filter === "all") {
+                    return true
+                  }
+                  return item.username === filter
+                }).map(
                   ({post_id, created_datetime, post, post_likes, username}, index) =>
-                    <tr key={post_id}
+                    <tr key={index}
                         className={`marketer__tr ${index % 2 !== 0 ? "marketer__tr_lightgreen" : ""}`}>
                       <td className="marketer__cell">{dateFormat(created_datetime, "dd.mm.yyyy HH:MM")}</td>
                       <td className="marketer__cell">{post}</td>
