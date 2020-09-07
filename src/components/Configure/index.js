@@ -57,9 +57,17 @@ const Configure = (
             value={input}
             onChange={onInputChange}
             onKeyDown={onAddSnack}
+            disabled={snacks.length === 5}
           />
         </div>
+        {
+          snacks.length ? <div className="configure__validate">
+            <button className="admin__button">VALIDATE</button>
+          </div> : null
+        }
+
       </div>
+
       {snacks.length && (configure.length > 1)
         ? <div className="configure__next-wrapper" >
           <div className="configure__next" onClick={() => {

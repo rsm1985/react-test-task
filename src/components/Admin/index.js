@@ -6,6 +6,7 @@ import Tw from 'images/twitter.svg'
 import Yt from 'images/youtube.svg'
 import Soc from 'images/social.png'
 import Arrow from 'images/next.svg'
+import Pagination from 'components/SourcesPagination'
 import './styles.scss'
 
 const Admin = () => {
@@ -46,15 +47,43 @@ const Admin = () => {
       configure: false,
       currentStep: false
     },
+    {
+      id: 5,
+      label: "Social 2",
+      placeholder: "Placeholder",
+      icon: Soc,
+      state: false,
+      configure: false,
+      currentStep: false
+    },
+    {
+      id: 6,
+      label: "Social 3",
+      placeholder: "Placeholder",
+      icon: Soc,
+      state: false,
+      configure: false,
+      currentStep: false
+    },
+    {
+      id: 7,
+      label: "Social 4",
+      placeholder: "Placeholder",
+      icon: Soc,
+      state: false,
+      configure: false,
+      currentStep: false
+    },
   ]
-  const [selects, setSelects] = useState(false);
-  const [selection, setSelection] = useState(selectionState);
+  const [selects, setSelects] = useState(false)
+  const [selection, setSelection] = useState(selectionState)
   const [sourcesToConfigure, setSourcesToConfigure] = useState([])
   const [isIngestionButtonShow, setIsIngestionButtonShow] = useState(false)
+  const [activePage, setActivePage] = useState(0)
   const onSelectsClick = () => {
     setSelects(!selects)
   };
-
+  // console.log("selection", selection)
   const onSourcesClick = () => {
     setSourcesToConfigure(selection.filter(item => item.state))
   };
@@ -108,6 +137,13 @@ const Admin = () => {
                   </div>)
                 ) : null
               }
+            </div>
+            <div className="sources__pagination">
+              <Pagination
+                activePage={activePage}
+                setActivePage={setActivePage}
+                sources={selection.length}
+              />
             </div>
           </div>
 
