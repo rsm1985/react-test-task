@@ -225,7 +225,7 @@ const Admin = () => {
     <>
       <div className="admin">
         <div className="admin__buttons">
-          <button className="admin__button" onClick={onSelectsClick}>MANAGE SOURCES</button>
+          <button className={`admin__button ${selects ? "active" : ""}`} onClick={onSelectsClick}>MANAGE SOURCES</button>
           <Link to="/blank">
             <button className="admin__button">MANAGE TEAM</button>
           </Link>

@@ -9,8 +9,8 @@ const Configure = (
 
   const onInputChange = (e) => {
     const lastValue = e.target.value.toLowerCase().split("").pop()
-    for(let i = 0; i < inputValidValues.length; i++) {
-      if(inputValidValues[i] === lastValue) {
+    for (let i = 0; i < inputValidValues.length; i++) {
+      if (inputValidValues[i] === lastValue) {
         setInput(e.target.value.toLowerCase())
         return
       }
@@ -20,7 +20,7 @@ const Configure = (
     if (e.key === 'Enter') {
       const newSnacks = snacks.slice();
       const newValue = e.target.value.toLowerCase().trim()
-      if(newValue.length) {
+      if (newValue.length) {
         newSnacks.push(newValue);
         setSnacks(newSnacks);
         setInput("");
@@ -59,6 +59,9 @@ const Configure = (
             onKeyDown={onAddSnack}
             disabled={snacks.length === 5}
           />
+          <div className="configure__error">
+            {snacks.length === 5 ? "Maximum limit of 5 is reached" : ""}
+          </div>
         </div>
         {
           snacks.length ? <div className="configure__validate">
@@ -68,21 +71,23 @@ const Configure = (
 
       </div>
 
-      {snacks.length && (configure.length > 1)
-        ? <div className="configure__next-wrapper" >
-          <div className="configure__next" onClick={() => {
-            setSnacks([])
-            setNextStep()
-          }}>
-            <div className="configure__next-arrow">
-              <img className="configure__arrow-icon" src={Arrow} alt="arrow"/>
-            </div>
-            <div className="configure__arrow-label">
-              {configure[1].label}
+      {
+        snacks.length && (configure.length > 1)
+          ? <div className="configure__next-wrapper">
+            <div className="configure__next" onClick={() => {
+              setSnacks([])
+              setNextStep()
+            }}>
+              <div className="configure__next-arrow">
+                <img className="configure__arrow-icon" src={Arrow} alt="arrow"/>
+              </div>
+              <div className="configure__arrow-label">
+                {configure[1].label}
+              </div>
             </div>
           </div>
-        </div>
-        : null}
+          : null
+      }
     </div>
   </>
 }
