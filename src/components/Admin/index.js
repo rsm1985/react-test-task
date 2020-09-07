@@ -7,6 +7,7 @@ import Yt from 'images/youtube.svg'
 import Soc from 'images/social.png'
 import Arrow from 'images/next.svg'
 import Pagination from 'components/SourcesPagination'
+import {SELECTIONS_PER_PAGE} from 'helpers/constants'
 import './styles.scss'
 
 const Admin = () => {
@@ -79,7 +80,7 @@ const Admin = () => {
   const [selection, setSelection] = useState(selectionState)
   const [sourcesToConfigure, setSourcesToConfigure] = useState([])
   const [isIngestionButtonShow, setIsIngestionButtonShow] = useState(false)
-  const [activePage, setActivePage] = useState(0)
+  const [activePage, setActivePage] = useState(1)
   const onSelectsClick = () => {
     setSelects(!selects)
   };
@@ -103,7 +104,13 @@ const Admin = () => {
     }
     else setIsIngestionButtonShow(true)
   }
-
+  console.log("activePage", activePage)
+  console.log(activePage * SELECTIONS_PER_PAGE + SELECTIONS_PER_PAGE - 1)
+  console.log("selection.filter", selection.filter(
+    item => item.id >=
+      (activePage * SELECTIONS_PER_PAGE)
+      && (item.id < (activePage * SELECTIONS_PER_PAGE + SELECTIONS_PER_PAGE))
+  ))
   return (
     <>
       <div className="admin">
@@ -118,13 +125,18 @@ const Admin = () => {
         </div>
 
       </div>
+
       {selects
         ? <div className="sources">
           <div className="sources__section sources__section_sources">
             <div className="sources__header">SELECT SOURCES</div>
             <div className="sources__selection">
               {selection ?
-                selection.map(item => (
+                selection.filter(
+                  item => item.id >=
+                    (activePage * SELECTIONS_PER_PAGE)
+                    && (item.id < (activePage * SELECTIONS_PER_PAGE + SELECTIONS_PER_PAGE - 1))
+                ).map(item => (
                   <div className="sources__selection-item" key={item.id}>
                     <input
                       className="sources__selection-checkbox"

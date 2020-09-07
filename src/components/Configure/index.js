@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import Arrow from 'images/next-white.svg'
-import {inputValidValues} from 'constants/constants'
+import {inputValidValues} from 'helpers/constants'
 
 const Configure = (
   {configure, setNextStep, setIsIngestionButtonShow}) => {
