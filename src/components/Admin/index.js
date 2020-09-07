@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, memo} from "react";
 import Configure from 'components/Configure'
 import {Link} from "react-router-dom";
 import Fb from 'images/facebook.svg'
@@ -75,6 +75,42 @@ const Admin = () => {
       configure: false,
       currentStep: false
     },
+    {
+      id: 8,
+      label: "Social 8",
+      placeholder: "Placeholder",
+      icon: Soc,
+      state: false,
+      configure: false,
+      currentStep: false
+    },
+    {
+      id: 9,
+      label: "Social 9",
+      placeholder: "Placeholder",
+      icon: Soc,
+      state: false,
+      configure: false,
+      currentStep: false
+    },
+    {
+      id: 10,
+      label: "Social 10",
+      placeholder: "Placeholder",
+      icon: Soc,
+      state: false,
+      configure: false,
+      currentStep: false
+    },
+    {
+      id: 11,
+      label: "Social 11",
+      placeholder: "Placeholder",
+      icon: Soc,
+      state: false,
+      configure: false,
+      currentStep: false
+    }
   ]
   const [selects, setSelects] = useState(false)
   const [selection, setSelection] = useState(selectionState)
@@ -104,13 +140,9 @@ const Admin = () => {
     }
     else setIsIngestionButtonShow(true)
   }
-  console.log("activePage", activePage)
-  console.log(activePage * SELECTIONS_PER_PAGE + SELECTIONS_PER_PAGE - 1)
-  console.log("selection.filter", selection.filter(
-    item => item.id >=
-      (activePage * SELECTIONS_PER_PAGE)
-      && (item.id < (activePage * SELECTIONS_PER_PAGE + SELECTIONS_PER_PAGE))
-  ))
+  console.log("start",
+    (activePage * SELECTIONS_PER_PAGE - SELECTIONS_PER_PAGE + 1))
+  console.log("stop", activePage * SELECTIONS_PER_PAGE)
   return (
     <>
       <div className="admin">
@@ -133,9 +165,12 @@ const Admin = () => {
             <div className="sources__selection">
               {selection ?
                 selection.filter(
-                  item => item.id >=
-                    (activePage * SELECTIONS_PER_PAGE)
-                    && (item.id < (activePage * SELECTIONS_PER_PAGE + SELECTIONS_PER_PAGE - 1))
+                  item => {
+                    console.log("item.id", item.id)
+                    return (item.id >=
+                      (activePage * SELECTIONS_PER_PAGE - SELECTIONS_PER_PAGE + 1))
+                      && (item.id < (activePage * SELECTIONS_PER_PAGE + 1))
+                  }
                 ).map(item => (
                   <div className="sources__selection-item" key={item.id}>
                     <input
@@ -188,4 +223,4 @@ const Admin = () => {
     </>
   )
 };
-export default Admin
+export default memo(Admin)

@@ -1,4 +1,4 @@
-import React, {useState} from "react"
+import React, {useState, memo} from "react"
 import Arrow from 'images/next-white.svg'
 import {inputValidValues} from 'helpers/constants'
 
@@ -87,4 +87,4 @@ const Configure = (
   </>
 }
 
-export default Configure
+export default memo(Configure)
