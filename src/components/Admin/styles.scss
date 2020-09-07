@@ -96,12 +96,21 @@
   &__input {
     display: flex;
     align-items: center;
+    position: relative;
     margin-left: 15px;
     margin-right: 10px;
     border: 1px solid #000;
     border-radius: 5px;
     padding: 5px;
     width: 100%;
+  }
+  &__error {
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    font-size: 16px;
+    font-style: italic;
+    color: red;
   }
   &__input-field {
     border: none;

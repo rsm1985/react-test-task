@@ -1,5 +1,6 @@
 import React, {useState} from "react"
 import Arrow from 'images/next-white.svg'
+import {inputValidValues} from 'constants/constants'
 
 const Configure = (
   {configure, setNextStep, setIsIngestionButtonShow}) => {
@@ -7,13 +8,18 @@ const Configure = (
   const [input, setInput] = useState("");
 
   const onInputChange = (e) => {
-    setInput(e.target.value)
+    const lastValue = e.target.value.toLowerCase().split("").pop()
+    for(let i = 0; i < inputValidValues.length; i++) {
+      if(inputValidValues[i] === lastValue) {
+        setInput(e.target.value.toLowerCase())
+        return
+      }
+    }
   };
   const onAddSnack = (e) => {
     if (e.key === 'Enter') {
       const newSnacks = snacks.slice();
-      const newValue = e.target.value.trim()
-      console.log("newValue", newValue)
+      const newValue = e.target.value.toLowerCase().trim()
       if(newValue.length) {
         newSnacks.push(newValue);
         setSnacks(newSnacks);
@@ -50,7 +56,8 @@ const Configure = (
             type="text"
             value={input}
             onChange={onInputChange}
-            onKeyPress={onAddSnack}/>
+            onKeyDown={onAddSnack}
+          />
         </div>
       </div>
       {snacks.length && (configure.length > 1)
