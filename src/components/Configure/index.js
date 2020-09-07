@@ -12,13 +12,16 @@ const Configure = (
   const onAddSnack = (e) => {
     if (e.key === 'Enter') {
       const newSnacks = snacks.slice();
-      newSnacks.push(e.target.value);
-      setSnacks(newSnacks);
-      setInput("");
-      if (configure.length === 1) {
-        setIsIngestionButtonShow(true)
+      const newValue = e.target.value.trim()
+      console.log("newValue", newValue)
+      if(newValue.length) {
+        newSnacks.push(newValue);
+        setSnacks(newSnacks);
+        setInput("");
+        if (configure.length === 1) {
+          setIsIngestionButtonShow(true)
+        }
       }
-
     }
   };
   const onRemoveSnack = (snack) => {
