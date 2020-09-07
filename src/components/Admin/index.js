@@ -41,7 +41,7 @@ const Admin = () => {
     },
     {
       id: 4,
-      label: "Social",
+      label: "Social 4",
       placeholder: "Placeholder",
       icon: Soc,
       state: false,
@@ -50,7 +50,7 @@ const Admin = () => {
     },
     {
       id: 5,
-      label: "Social 2",
+      label: "Social 5",
       placeholder: "Placeholder",
       icon: Soc,
       state: false,
@@ -59,7 +59,7 @@ const Admin = () => {
     },
     {
       id: 6,
-      label: "Social 3",
+      label: "Social 6",
       placeholder: "Placeholder",
       icon: Soc,
       state: false,
@@ -68,7 +68,7 @@ const Admin = () => {
     },
     {
       id: 7,
-      label: "Social 4",
+      label: "Social 7",
       placeholder: "Placeholder",
       icon: Soc,
       state: false,
@@ -110,6 +110,87 @@ const Admin = () => {
       state: false,
       configure: false,
       currentStep: false
+    },
+    {
+      id: 12,
+      label: "Social 12",
+      placeholder: "Placeholder",
+      icon: Soc,
+      state: false,
+      configure: false,
+      currentStep: false
+    },
+    {
+      id: 13,
+      label: "Social 13",
+      placeholder: "Placeholder",
+      icon: Soc,
+      state: false,
+      configure: false,
+      currentStep: false
+    },
+    {
+      id: 14,
+      label: "Social 14",
+      placeholder: "Placeholder",
+      icon: Soc,
+      state: false,
+      configure: false,
+      currentStep: false
+    },
+    {
+      id: 15,
+      label: "Social 15",
+      placeholder: "Placeholder",
+      icon: Soc,
+      state: false,
+      configure: false,
+      currentStep: false
+    },
+    {
+      id: 16,
+      label: "Social 16",
+      placeholder: "Placeholder",
+      icon: Soc,
+      state: false,
+      configure: false,
+      currentStep: false
+    },
+    {
+      id: 17,
+      label: "Social 17",
+      placeholder: "Placeholder",
+      icon: Soc,
+      state: false,
+      configure: false,
+      currentStep: false
+    },
+    {
+      id: 18,
+      label: "Social 18",
+      placeholder: "Placeholder",
+      icon: Soc,
+      state: false,
+      configure: false,
+      currentStep: false
+    },
+    {
+      id: 19,
+      label: "Social 19",
+      placeholder: "Placeholder",
+      icon: Soc,
+      state: false,
+      configure: false,
+      currentStep: false
+    },
+    {
+      id: 20,
+      label: "Social 20",
+      placeholder: "Placeholder",
+      icon: Soc,
+      state: false,
+      configure: false,
+      currentStep: false
     }
   ]
   const [selects, setSelects] = useState(false)
@@ -140,9 +221,6 @@ const Admin = () => {
     }
     else setIsIngestionButtonShow(true)
   }
-  console.log("start",
-    (activePage * SELECTIONS_PER_PAGE - SELECTIONS_PER_PAGE + 1))
-  console.log("stop", activePage * SELECTIONS_PER_PAGE)
   return (
     <>
       <div className="admin">
@@ -155,9 +233,7 @@ const Admin = () => {
             <button className="admin__button">MARKETER</button>
           </Link>
         </div>
-
       </div>
-
       {selects
         ? <div className="sources">
           <div className="sources__section sources__section_sources">
@@ -195,13 +271,15 @@ const Admin = () => {
           </div>
 
           <div className="sources__section">
+            <div className="sources__arrow" onClick={onSourcesClick}>
             {
               selectionLength
-                ? <div className="sources__arrow" onClick={onSourcesClick}>
+                ?
                   <img className="sources__arrow-icon" src={Arrow} alt=""/>
-                </div>
+
                 : null
             }
+            </div>
           </div>
           <div className="sources__section sources__section_configure">
             {sourcesToConfigure.length ? <Configure
@@ -212,12 +290,13 @@ const Admin = () => {
              : null
             }
           </div>
+          <div className="sources__section sources__section_ingestion">
           {isIngestionButtonShow
-            ? <div className="sources__section sources__section_ingestion">
+            ?
               <button className="sources__injestion-btn" onClick={()=>alert("Start ingestion")}>Start Ingestion</button>
-            </div>
             : null
           }
+          </div>
         </div>
         : null}
     </>

@@ -16,6 +16,8 @@
 }
 .sources {
   display: flex;
+  justify-content: center;
+  margin-top: 50px;
   &__header {
     margin: 0 auto;
     padding: 5px 15px;
@@ -36,7 +38,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      height: 200px;
+      height: 230px;
+      min-width: 200px;
     }
   }
   &__selection {
