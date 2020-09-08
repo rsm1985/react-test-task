@@ -201,7 +201,6 @@ const Admin = () => {
   const onSelectsClick = () => {
     setSelects(!selects)
   };
-  // console.log("selection", selection)
   const onSourcesClick = () => {
     setSourcesToConfigure(selection.filter(item => item.state))
   };
@@ -242,7 +241,6 @@ const Admin = () => {
               {selection ?
                 selection.filter(
                   item => {
-                    console.log("item.id", item.id)
                     return (item.id >=
                       (activePage * SELECTIONS_PER_PAGE - SELECTIONS_PER_PAGE + 1))
                       && (item.id < (activePage * SELECTIONS_PER_PAGE + 1))
